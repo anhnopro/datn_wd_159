@@ -25,7 +25,8 @@
                             </div>
                             <!-- Dịch vụ -->
                             <div class="col-md-6">
-                                <label for="service" class="form-label">Chọn Dịch Vụ <span style="color:red;"> *<span></label>
+                                <label for="service" class="form-label">Chọn Dịch Vụ <span style="color:red;">
+                                        *<span></label>
                                 <select name="service_id" id="service" class="form-select">
                                     <option value="">Chọn dịch vụ</option>
                                     @foreach ($services as $service)
@@ -49,7 +50,8 @@
                             <!-- Giá -->
                             <div class="col-md-6">
                                 <label for="price" class="form-label">Giá <span style="color:red;"> *<span></label>
-                                <input type="number" name="price" class="form-control" value="{{ old('price') }}">
+                                <input type="text" id="price" name="price" class="form-control"
+                                    value="{{ old('price') }}">
                                 <p class="mt-2" id="price-error" style="color: red; display: none;"></p>
                                 @error('price')
                                     <p class="mt-2" class="mt-2" style="color: red">{{ $message }}</p>
@@ -66,7 +68,8 @@
                                 @enderror
                             </div>
                             <div class="col-md-6">
-                                <label for="area" class="form-label">Diện tích(mét vuông) <span style="color:red;"> *<span></label>
+                                <label for="area" class="form-label">Diện tích(mét vuông) <span style="color:red;">
+                                        *<span></label>
                                 <input type="text" name="area" class="form-control" value="{{ old('area') }}">
                                 <p class="mt-2" id="area-error" style="color: red; display: none;"></p>
                                 @error('area')
@@ -76,8 +79,10 @@
 
                             <!-- Hình ảnh -->
                             <div class="col-md-12">
-                                <label for="images" class="form-label fw-bold">Hình Ảnh <span style="color:red;"> *<span></label>
-                                <input type="file" class="form-control shadow-sm" name="images[]" id="images" multiple accept="image/*">
+                                <label for="images" class="form-label fw-bold">Hình Ảnh <span style="color:red;">
+                                        *<span></label>
+                                <input type="file" class="form-control shadow-sm" name="images[]" id="images" multiple
+                                    accept="image/*">
                                 <div id="preview-images" class="row mt-3 gy-3"></div>
                                 <small class="text-muted d-block mt-1">Chọn nhiều ảnh bằng cách nhấn giữ phím Ctrl.</small>
                                 <p class="mt-2" id="images-error" style="color: red; display: none;"></p>
@@ -88,7 +93,8 @@
 
                             <!-- Mô tả -->
                             <div class="col-md-12">
-                                <label for="description" class="form-label fw-bold">Mô Tả <span style="color:red;"> *<span></label>
+                                <label for="description" class="form-label fw-bold">Mô Tả <span style="color:red;">
+                                        *<span></label>
                                 <textarea id="editor" class="form-control shadow-sm" name="description" rows="4">{{ old('description') }}</textarea>
                                 <p class="mt-2" id="description-error" style="color: red; display: none;"></p>
                                 @error('description')
@@ -147,4 +153,5 @@
     <script src="{{ asset('room/editor.js') }}"></script>
     <script src="{{ asset('room/images.js') }}"></script>
     <script src="{{ asset('room/validate-room.js') }}"></script>
+    <script src="{{asset('room/formatPrice.js')}}"></script>
 @endsection

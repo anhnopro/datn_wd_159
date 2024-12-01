@@ -47,7 +47,20 @@
                 <tr>
                     <td>{{ $article->title }}</td>
                     <td>{{ $article->room->name }}</td>
-                    <td>{{ $article->type }}</td>
+                    <td>
+                        @if($article->type === 'regular')
+                            Tin thường
+                        @elseif($article->type === 'vip')
+                            VIP
+                        @elseif($article->type === 'urgent')
+                            Tin gấp
+                        @elseif($article->type === 'free')
+                            Tin miễn phí
+                        @else
+                            Không xác định
+                        @endif
+                    </td>
+
                     <td>{{ $article->category->name }}</td>
                     <td>
                         @if($article->status === 0)
@@ -80,9 +93,7 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Xóa</button>
                             </form>
-                        @elseif($article->status === 2)
-                            {{-- Trạng thái đã được duyệt: Không thể chỉnh sửa hoặc xóa --}}
-                            <span class="text-muted">Không thể chỉnh sửa hoặc xóa</span>
+                       
                         @endif
                     </td>
                 </tr>

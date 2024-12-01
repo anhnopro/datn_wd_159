@@ -16,7 +16,7 @@ class HomeController extends Controller
         // Lấy các bài viết có category_id bằng $categoryId
         // Lấy các bài viết có category_id = 1 và status = 2, giới hạn 8 bài
         $articlesVip = Article::where('category_id', 1)
-            ->where('status', 2)  // Điều kiện lọc theo status = 2
+            ->where('type', 'urgent')  
             ->limit(8)
             ->get();
 
@@ -44,7 +44,7 @@ class HomeController extends Controller
             ->limit(3)
             ->get();
         $categories = Category::all();
-        
+
         return view('pages.guest.detail', compact('article', 'room', 'images', 'articleRecents', 'categories'));
     }
 

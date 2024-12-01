@@ -22,7 +22,7 @@ class BookingController extends Controller
     public function detail($id) {
         $booking = Booking::find($id);
         $room = Room::find($booking->room_id);
-       
+
         return view('landlord_admin.pages.booking.detail', compact('booking', 'room'));
     }
 
@@ -34,7 +34,7 @@ class BookingController extends Controller
         if ($booking->status === 'confirmed') {
             return back()->with('error', 'Đơn đặt phòng đã được xác nhận');
         }
-        if ($room->status == false) {
+        if ($room->status === 0) {
             return back()->with('error', 'Phòng đã được đặt');
         }
 
@@ -44,7 +44,7 @@ class BookingController extends Controller
         ]);
 
         $room->update([
-            'status' => false,
+            'status' => 0,
         ]);
 
         // Gửi email thông báo cho người đặt

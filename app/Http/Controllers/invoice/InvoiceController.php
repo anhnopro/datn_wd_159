@@ -15,7 +15,7 @@ class InvoiceController extends Controller
 {
     public function index()
     {
-        $bookings = Booking::where('status','confirmed')->orderBy('created_at', 'desc')->get();;
+        $bookings = Booking::where('status', 'confirmed')->orderBy('created_at', 'desc')->get();;
 
         return view('landlord_admin.invoice.index', compact('bookings'));
     }
@@ -43,7 +43,10 @@ class InvoiceController extends Controller
             'electricity' => $electricity,
             'water' => $water,
             'total_price' => $totalPrice,
+            'invoice_status' => 'created'
         ]);
+        $booking->invoice_status = 'created';
+        $booking->save();
         $invoiceFolder = storage_path('app/public/invoices');
         if (!file_exists($invoiceFolder)) {
             mkdir($invoiceFolder, 0777, true);

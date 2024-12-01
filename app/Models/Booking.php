@@ -23,6 +23,7 @@ class Booking extends Model
         'payment_status',
         'note',
         'cancel_reason',
+        'invoice_status'
     ];
 
     public function user() {

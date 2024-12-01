@@ -27,7 +27,7 @@ class CategoryAdminController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:categories',
-            'slug' => 'required|unique:categories',
+           
         ]);
 
         Category::create($request->all());

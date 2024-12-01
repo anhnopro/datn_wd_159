@@ -18,12 +18,6 @@
                                 <label for="name" class="form-label">Tên danh mục *</label>
                                 <input type="text" name="name" class="form-control" required>
                             </div>
-
-                            <div class="col-md-6">
-                                <label for="slug" class="form-label">Slug *</label>
-                                <input type="text" name="slug" class="form-control" required>
-                            </div>
-
                             <div class="col-md-12">
                                 <label for="description" class="form-label">Mô tả *</label>
                                 <textarea name="description" class="form-control" rows="4" required></textarea>

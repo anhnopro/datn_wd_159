@@ -13,7 +13,6 @@ class Category extends Model
         'name',
         'description',
         'status',
-        'slug',
     ];
 
     public function articles()

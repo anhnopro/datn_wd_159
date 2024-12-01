@@ -35,7 +35,7 @@ Route::get('register', [AuthController::class, 'showFormRegister'])->name('auth.
 Route::post('register', [AuthController::class, 'handleRegister'])->name('auth.register');
 Route::get('login', [AuthController::class, 'showFormLogin'])->name('auth.login');
 Route::post('login', [AuthController::class, 'handleLogin'])->name('auth.login');
-Route::get('logout', [AuthController::class, 'logout'])->name('auth.logout');
+Route::post('logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 Route::get('admin/profile', [AuthController::class, 'showProfileAdmin'])->name('admin.profile');
 Route::get('admin/profile/{user}/edit', [ControllersAuthController::class, 'edit'])->name('admin.profile.edit');
