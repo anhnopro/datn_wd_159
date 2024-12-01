@@ -80,71 +80,80 @@
                                         method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <div class="mb-3">
-                                            <label for="name" class="form-label">Tên người dùng <span
-                                                    class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="name" name="name"
-                                                placeholder="Nhập tên..." required>
-                                            <div class="invalid-feedback">
-                                                Vui lòng nhập tên
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label for="avatar" class="form-label">Ảnh đại diện<span
-                                                    class="text-danger">*</span></label>
-                                            <input type="file" class="form-control" id="avatar" name="avatar"
-                                                placeholder="" required>
-                                            <div class="invalid-feedback">
-                                                {{-- Vui lòng nhập tên --}}
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label for="useremail" class="form-label">Email <span
-                                                    class="text-danger">*</span></label>
-                                            <input type="email" class="form-control" id="useremail" name="email"
-                                                placeholder="Nhập địa chỉ email..." required>
-                                            <div class="invalid-feedback">
-                                                Vui lòng nhập địa chỉ email
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label for="phone" class="form-label">Số điên thoại <span
-                                                    class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="phone" name="phone"
-                                                placeholder="Nhập số điện thoại..." required>
-                                            <div class="invalid-feedback">
-                                                Please enter username
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label class="form-label" for="password-input">Mật khẩu<span
-                                                    class="text-danger">*</span></label></label>
-                                            <div class="position-relative auth-pass-inputgroup">
-                                                <input type="password" name="password"
-                                                    class="form-control pe-5 password-input" onpaste="return false"
-                                                    placeholder="Nhập mật khẩu..." id="password-input"
-                                                    aria-describedby="passwordInput"
-                                                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
-                                                <button
-                                                    class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
-                                                    type="button" id="password-addon"><i
-                                                        class="ri-eye-fill align-middle"></i></button>
+                                            <label for="name" class="form-label">Tên người dùng <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name"
+                                                value="{{ old('name') }}" placeholder="Nhập tên...">
+                                            @error('name')
                                                 <div class="invalid-feedback">
-                                                    Vui lòng nhập mật khẩu
+                                                    {{ $message }}
                                                 </div>
+                                            @enderror
+                                        </div>
+                                    
+                                        <!-- Ảnh đại diện -->
+                                        <div class="mb-3">
+                                            <label for="avatar" class="form-label">Ảnh đại diện<span class="text-danger">*</span></label>
+                                            <input type="file" class="form-control @error('avatar') is-invalid @enderror" id="avatar" name="avatar">
+                                            @error('avatar')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    
+                                        <!-- Email -->
+                                        <div class="mb-3">
+                                            <label for="useremail" class="form-label">Email <span class="text-danger">*</span></label>
+                                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="useremail" name="email"
+                                                value="{{ old('email') }}" placeholder="Nhập địa chỉ email...">
+                                            @error('email')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    
+                                        <!-- Số điện thoại -->
+                                        <div class="mb-3">
+                                            <label for="phone" class="form-label">Số điện thoại <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone"
+                                                value="{{ old('phone') }}" placeholder="Nhập số điện thoại...">
+                                            @error('phone')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    
+                                        <!-- Mật khẩu -->
+                                        <div class="mb-3">
+                                            <label class="form-label" for="password-input">Mật khẩu <span class="text-danger">*</span></label>
+                                            <div class="position-relative auth-pass-inputgroup">
+                                                <input type="password" name="password" class="form-control pe-5 password-input @error('password') is-invalid @enderror"
+                                                    placeholder="Nhập mật khẩu..." id="password-input">
+                                                <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button">
+                                                    <i class="ri-eye-fill align-middle"></i>
+                                                </button>
+                                                @error('password')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
                                             </div>
                                         </div>
-
+                                    
+                                        <!-- Vai trò -->
                                         <div class="mb-3">
-                                            <label for="role" class="form-label">Role <span
-                                                    class="text-danger">*</span></label>
-                                            <select class="form-control" name="role" id="role">
-                                                <option value="1">Người cho thuê</option>
-                                                <option value="2">Người thuê </option>
+                                            <label for="role" class="form-label">Role <span class="text-danger">*</span></label>
+                                            <select class="form-control @error('role') is-invalid @enderror" name="role" id="role">
+                                                <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Người quản trị</option>
+                                                <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>Người dùng</option>
                                             </select>
+                                            @error('role')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
 
                                         {{-- <div class="mb-4">
