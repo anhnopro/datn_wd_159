@@ -14,11 +14,11 @@ use Storage;
 class RoomController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $rooms = Room::all();
-
-        return view('landlord_admin.pages.room.index', compact('rooms'));
+        $services = Service::all();
+    $rooms = Room::orderByDesc('id')->paginate(4);
+        return view('landlord_admin.pages.room.index', compact('rooms','services'));
     }
 
     public function create()
@@ -195,4 +195,36 @@ class RoomController extends Controller
             return redirect()->route('landlord_admin.room.list')->with('error', 'Có lỗi xảy ra: ' . $e->getMessage());
         }
     }
+    public function filter(Request $request)
+{
+    // Lấy danh sách dịch vụ để hiển thị trong dropdown
+    $services = Service::all();
+
+    // Lọc phòng theo loại dịch vụ, giá và trạng thái nếu có
+    $rooms = Room::when($request->service_type, function ($query) use ($request) {
+        return $query->where('service_id', $request->service_type);
+    })
+    ->when($request->price_range, function ($query) use ($request) {
+        if ($request->price_range == '1') {
+            return $query->where('price', '<', 3000000);
+        }
+        if ($request->price_range == '2') {
+            return $query->whereBetween('price', [3000000, 10000000]);
+        }
+        if ($request->price_range == '3') {
+            return $query->where('price', '>', 10000000);
+        }
+    })
+    
+    ->when($request->status !== null, function ($query) use ($request) {
+        // Chuyển đổi giá trị 'status' thành boolean
+        $status = $request->status == '1'; // '1' -> true, '0' -> false
+        return $query->where('status', $status);
+    })
+    ->paginate(4);
+    
+    return view('landlord_admin.pages.room.filter', compact('rooms', 'services'));
+    }
+
+    
 }

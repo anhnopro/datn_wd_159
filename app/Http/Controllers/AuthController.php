@@ -25,7 +25,7 @@ class AuthController extends Controller
         'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         'role' => 'required|in:admin,user,moderator'
     ], [
-        // Thông báo lỗi tùy chỉnh
+        
         'name.required' => 'Tên không được để trống.',
         'name.min' => 'Tên phải có ít nhất 3 ký tự.',
         'email.required' => 'Email không được để trống.',
