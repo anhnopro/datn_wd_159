@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Gallery;
 use App\Models\Room;
 use App\Models\Service;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage as FacadesStorage;
@@ -59,20 +60,17 @@ class RoomController extends Controller
         );
 
 
-        // Kiểm tra category_id, nếu không có giá trị thì gán 0
-        // $categoryId = $request->category_id ?? 0;
-
-        // Xử lý upload nhiều ảnh và lấy ảnh đầu tiên để lưu vào `rooms`
-        $mainImagePath = null; // Biến lưu ảnh đầu tiên để dùng cho `rooms`
+           $id_user=User::get()->role;
+        $mainImagePath = null;
 
         if ($request->hasFile('images')) {
             $images = $request->file('images');
 
-            // Lấy ảnh đầu tiên để lưu vào trường `image` của `rooms`
+
             $firstImage = $images[0];
             $mainImagePath = $firstImage->store('rooms', 'public'); // Lưu ảnh đầu tiên vào thư mục 'rooms' trong 'public'
 
-            // Tạo mới phòng, lưu ảnh đầu tiên vào `rooms`
+
             $room = Room::create([
                 'name' => $request->name,
                 // 'category_id' => $categoryId,
@@ -81,7 +79,7 @@ class RoomController extends Controller
                 'description' => $request->description,
                 'price' => $request->price,
                 'area' => $request->area,
-                'user_id' => 1,
+                'user_id' => $id_user,
                 'status' => 1,
                 'image' => $mainImagePath, // Ảnh đầu tiên được lưu ở đây
             ]);
@@ -195,6 +193,7 @@ class RoomController extends Controller
             return redirect()->route('landlord_admin.room.list')->with('error', 'Có lỗi xảy ra: ' . $e->getMessage());
         }
     }
+
     public function filter(Request $request)
 {
     // Lấy danh sách dịch vụ để hiển thị trong dropdown
@@ -228,3 +227,4 @@ class RoomController extends Controller
 
     
 }
+

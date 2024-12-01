@@ -103,113 +103,12 @@
                                     aria-haspopup="true" aria-expanded="false">Loại phòng<i class="fa fa-angle-down"
                                         aria-hidden="true"></i></a>
                                 <ul class="dropdown-menu">
-                                    {{-- php --}}
                                     @foreach ($categories as $category)
                                         <li><a href="">{{ $category->name }}</a></li>
                                     @endforeach
                                 </ul>
                             </li>
-                            {{-- <li class="submenu dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                    aria-haspopup="true" aria-expanded="false">Pages<i class="fa fa-angle-down"
-                                        aria-hidden="true"></i></a>
-                                <ul class="dropdown-menu">
-                                    <li class="submenu dropdown">
-                                        <a href="service.html" class="dropdown-toggle" data-toggle="dropdown"
-                                            role="button" aria-haspopup="true" aria-expanded="false">Service<i
-                                                class="fa fa-angle-right" aria-hidden="true"></i></a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="service.html">Service</a></li>
-                                            <li><a href="service-detail.html">Service Detail</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="submenu dropdown">
-                                        <a href="aboutus.html" class="dropdown-toggle" data-toggle="dropdown"
-                                            role="button" aria-haspopup="true" aria-expanded="false">About Us<i
-                                                class="fa fa-angle-right" aria-hidden="true"></i></a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="aboutus.html">About One</a></li>
-                                            <li><a href="aboutus1.html">About Two</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="submenu dropdown">
-                                        <a href="gallery.html" class="dropdown-toggle" data-toggle="dropdown"
-                                            role="button" aria-haspopup="true" aria-expanded="false">Gallery<i
-                                                class="fa fa-angle-right" aria-hidden="true"></i></a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="gallery.html">Gallery 1</a></li>
-                                            <li><a href="gallery1.html">Gallery 2</a></li>
-                                            <li><a href="gallery2.html">Gallery Masonry</a></li>
-                                            <li><a href="gallery3.html">Gallery Lightbox</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="submenu dropdown">
-                                        <a href="events.html" class="dropdown-toggle" data-toggle="dropdown"
-                                            role="button" aria-haspopup="true" aria-expanded="false">Events<i
-                                                class="fa fa-angle-right" aria-hidden="true"></i></a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="events.html">Events One</a></li>
-                                            <li><a href="events1.html">Events Two</a></li>
-                                            <li><a href="events-detail.html">Events Detail</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="submenu dropdown">
-                                        <a href="contact.html" class="dropdown-toggle" data-toggle="dropdown"
-                                            role="button" aria-haspopup="true" aria-expanded="false">Contact Us<i
-                                                class="fa fa-angle-right" aria-hidden="true"></i></a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="contact.html">Contact One</a></li>
-                                            <li><a href="contact1.html">Contact Two</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="submenu dropdown">
-                                        <a href="404.html" class="dropdown-toggle" data-toggle="dropdown"
-                                            role="button" aria-haspopup="true" aria-expanded="false">Error<i
-                                                class="fa fa-angle-right" aria-hidden="true"></i></a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="404.html">Error Page 1</a></li>
-                                            <li><a href="404-1.html">Error Page 1</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="submenu dropdown">
-                                        <a href="comingsoon.html" class="dropdown-toggle" data-toggle="dropdown"
-                                            role="button" aria-haspopup="true" aria-expanded="false">Comming Soon<i
-                                                class="fa fa-angle-right" aria-hidden="true"></i></a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="comingsoon.html">Coming Soon 1</a></li>
-                                            <li><a href="comingsoon-1.html">Coming Soon 2</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="testimonial.html">Testimonials</a></li>
-                                    <li><a href="pricing.html">Pricing</a></li>
-                                    <li><a href="faq.html">Faq</a></li>
-                                    <li><a href="terms.html">Terms and Conditions</a></li>
-                                </ul>
-                            </li>
-                            <li class="submenu dropdown">
-                                <a href="restaurant.html" class="dropdown-toggle" data-toggle="dropdown"
-                                    role="button" aria-haspopup="true" aria-expanded="false">Restaurant<i
-                                        class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="restaurant.html">Home</a></li>
-                                    <li><a href="restaurant-about.html">About Us</a></li>
-                                    <li><a href="restaurant-menu.html">Menu</a></li>
-                                    <li><a href="restaurant-reserve.html">Reservation</a></li>
-                                </ul>
-                            </li>
-                            <li class="submenu dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                    aria-haspopup="true" aria-expanded="false">Shop<i class="fa fa-angle-down"
-                                        aria-hidden="true"></i></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="shop.html">Shop List</a></li>
-                                    <li><a href="shop-detail.html">Shop Single</a></li>
-                                    <li><a href="cart.html">Cart</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
-                                    <li><a href="login.html">Account</a></li>
-                                    <li><a href="forgot-password.html">Forgot Password</a></li>
-                                </ul>
-                            </li> --}}
+
                             <li class="submenu dropdown">
                                 <a href="blog-full.html" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                     aria-haspopup="true" aria-expanded="false">Blog<i class="fa fa-angle-down"
