@@ -84,7 +84,7 @@
                 <nav class="navbar navbar-default">
 
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="{{route('home')}}">
+                        <a class="navbar-brand" href="{{route('guest.home')}}">
                             <img alt="Image" src="{{ asset('client/assets/images/logo.png') }}" class="logo-white" />
                             <img alt="Image" src="{{ asset('client/assets/images/logo-black.png') }}"
                                 class="logo-black" />
