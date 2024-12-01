@@ -12,8 +12,9 @@ class ArticleController extends Controller
 {
     public function index()
     {
-        $articles = Article::all();
-        return view('landlord_admin.pages.article.index', compact('articles'));
+
+        $articles = Article::orderByDesc('id')->paginate(3);
+        return view('landlord_admin.pages.article.index',compact('articles'));
     }
     public function create()
     {
@@ -143,4 +144,7 @@ class ArticleController extends Controller
 
         return view('landlord_admin.pages.article.detail', compact('article'));
     }
+
+
 }
+

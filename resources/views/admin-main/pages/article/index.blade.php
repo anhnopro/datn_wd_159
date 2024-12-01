@@ -51,5 +51,8 @@
                 @endforeach
             </tbody>
         </table>
+        <div class="mt-3">
+            {{ $articles->links('pagination::bootstrap-5') }}
+        </div>
     </div>
 @endsection
