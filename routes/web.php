@@ -74,7 +74,7 @@ Route::get('landlord_admin/room/{id}/edit', [RoomController::class, 'edit'])->na
 Route::put('landlord_admin/room/{id}', [RoomController::class, 'update'])->name('landlord_admin.room.update');
 Route::delete('landlord_admin/room/{id}', [RoomController::class, 'destroy'])->name('landlord_admin.room.destroy');
 Route::get('landlord_admin/service/{id}', [ServiceController::class, 'show'])->name('landlord_admin.service.show');
-
+Route::get('landlord_admin/room/filter', [RoomController::class, 'filter'])->name('landlord_admin.room.filter');
 
 //Bài viết
 Route::get('landlord_admin/article', [ArticleController::class, 'index'])->name('landlord_admin.article.list');
@@ -102,6 +102,8 @@ Route::post('admin/room/create', [RoomAdminController::class, 'store'])->name('a
 Route::get('admin/room/{id}/edit', [RoomAdminController::class, 'edit'])->name('admin.room.edit');
 Route::put('admin/room/{id}', [RoomAdminController::class, 'update'])->name('admin.room.update');
 Route::delete('admin/room/{id}', [RoomAdminController::class, 'destroy'])->name('admin.room.destroy');
+Route::get('admin/room/filter', [RoomAdminController::class, 'filter'])->name('admin.room.filter');
+
 
 Route::get('admin/category', [CategoryAdminController::class, 'index'])->name('admin.category.list');
 Route::get('admin/category/create', [CategoryAdminController::class, 'create'])->name('admin.category.create');

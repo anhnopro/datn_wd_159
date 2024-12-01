@@ -10,7 +10,7 @@ class ArticleController extends Controller
 {
     public function index()
     {
-        $articles = Article::all();
+        $articles = Article::orderByDesc('id')->paginate(3);
         return view('landlord_admin.pages.article.index',compact('articles'));
     }
     public function create()

@@ -29,7 +29,7 @@
         <div class="col-xl-12 col-sm-12 col-md-12 mb-2 text-end">
             <a href="{{ route('landlord_admin.room.create') }}" class="btn btn-info">Thêm mới +</a>
         </div>
-        <form method="GET" action="{{ route('landlord_admin.room.filter') }}" class="mb-3">
+        {{-- <form method="GET" action="{{ route('landlord_admin.room.list') }}" class="mb-3">
             <div class="row">
                 <div class="col-md-3">
                     <label for="service_type">Chọn loại dịch vụ:</label>
@@ -45,12 +45,12 @@
                 
                 <div class="col-md-3">
                     <label for="price_range">Chọn mức giá:</label>
-                    <select name="price_range" id="price_range" class="form-control">
+                    <select name="price" id="price_range" class="form-control">
                         
                             <option value="">Tất cả mức giá</option>
-                            <option value="1" {{ request('price_range') == '1' ? 'selected' : '' }}>Dưới 3 triệu</option>
-                            <option value="2" {{ request('price_range') == '2' ? 'selected' : '' }}>3 - 10 triệu</option>
-                            <option value="3" {{ request('price_range') == '3' ? 'selected' : '' }}>Trên 10 triệu</option>
+                            <option value="under_3000000" {{ request('price_range') == 'under_3000000' ? 'selected' : '' }}>Dưới 3 triệu</option>
+                            <option value="3000000_10000000" {{ request('price_range') == '3000000_10000000' ? 'selected' : '' }}>3 - 10 triệu</option>
+                            <option value="over_10000000" {{ request('price_range') == 'over_10000000' ? 'selected' : '' }}>Trên 10 triệu</option>
                     </select>
                 </div>
         
@@ -67,7 +67,7 @@
                     <button type="submit" class="btn btn-primary mt-4">Lọc</button>
                 </div>
             </div>
-        </form>
+        </form> --}}
         <table class="table table-nowrap table-striped-columns mb-0">
             <thead class="table-light">
                 <tr>
@@ -88,7 +88,7 @@
                             <img src="{{ asset('storage/' . $room->image) }}" alt="{{ $room->name }}" width="100">
                         </td>
                         <td>{{ number_format($room->price, 2) }} VNĐ</td>
-                        <td>{{ $room->status ? 'còn phòng' : 'hết phòng' }}</td>
+                        <td>{{ $room->status ? 'Còn phòng' : 'Hết phòng' }}</td>
                         <td class="d-flex gap-3">
                             <a class="btn btn-warning" href="{{ route('landlord_admin.room.edit', $room->id) }}">Sửa</a>
                             <form action="{{ route('landlord_admin.room.destroy', $room->id) }}" method="POST"
