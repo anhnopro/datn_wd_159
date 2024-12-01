@@ -58,6 +58,20 @@
                             @enderror
                         </div>
 
+                        <!-- Thêm trường chọn 'type' vào đây -->
+                        <div class="col-md-6">
+                            <label for="type" class="form-label">Loại bài viết *</label>
+                            <select name="type" class="form-select">
+                                <option value="regular" {{ old('type', $article->type) == 'regular' ? 'selected' : '' }}>Regular</option>
+                                <option value="vip" {{ old('type', $article->type) == 'vip' ? 'selected' : '' }}>VIP</option>
+                                <option value="urgent" {{ old('type', $article->type) == 'urgent' ? 'selected' : '' }}>Urgent</option>
+                                <option value="free" {{ old('type', $article->type) == 'free' ? 'selected' : '' }}>Free</option>
+                            </select>
+                            @error('type')
+                                <p style="color: red">{{ $message }}</p>
+                            @enderror
+                        </div>
+
                         <div class="col-md-12">
                             <label for="description" class="form-label fw-bold">Mô Tả *</label>
                             <textarea id="editor"

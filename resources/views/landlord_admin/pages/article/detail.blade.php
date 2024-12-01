@@ -65,7 +65,7 @@
                                     </tr>
                                     <tr>
                                         <th>Mô tả phòng</th>
-                                        <td>{{ $article->room->description }}</td>
+                                        <td>{!! $article->room->description !!}</td>
                                     </tr>
                                     <tr>
                                         <th>Trạng thái phòng</th>

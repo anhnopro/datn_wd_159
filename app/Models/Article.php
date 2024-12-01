@@ -16,6 +16,8 @@ class Article extends Model
         'description',
         'articles_view',
         'status',
+        'type',
+        'user_id'
     ];
     public function category()
     {
@@ -25,5 +27,9 @@ class Article extends Model
     public function room()
     {
         return $this->belongsTo(Room::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

@@ -35,6 +35,7 @@
                 <tr>
                     <th>Tiêu đề</th>
                     <th>Phòng</th>
+                    <th>Loại tin</th>
                     <th>Danh mục</th>
 
                     <th>Trạng thái</th>
@@ -46,6 +47,7 @@
                     <tr>
                         <td>{{ $article->title }}</td>
                         <td>{{ $article->room->name  }}</td>
+                        <td>{{$article->type}}</td>
                         <td>{{ $article->category->name}}</td>
                         <td>
                             @if($article->status===0)
