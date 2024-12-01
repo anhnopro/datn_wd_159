@@ -16,37 +16,48 @@ class AuthController extends Controller
     }
 
     public function handleRegister(Request $request)
-    {
-        $validator = FacadesValidator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'phone' => 'required|string|max:15|unique:users',
-            'password' => 'required|string|min:8|',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'role' => 'required|string'
-        ]);
+{
+    $validator = FacadesValidator::make($request->all(), [
+        'name' => 'required|string|min:3|max:255',
+        'email' => 'required|email|max:255|unique:users,email',
+        'phone' => 'required|regex:/^\+?[0-9]{10,15}$/|unique:users,phone',
+        'password' => 'required|string|min:8|confirmed',
+        'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'role' => 'required'
+    ], [
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-            // return response()->json($validator->errors(), 422);
-        }
+        'name.required' => 'Tên không được để trống.',
+        'name.min' => 'Tên phải có ít nhất 3 ký tự.',
+        'email.required' => 'Email không được để trống.',
+        'email.unique' => 'Email này đã được sử dụng.',
+        'phone.required' => 'Số điện thoại không được để trống.',
+        'phone.regex' => 'Số điện thoại không hợp lệ.',
+        'password.required' => 'Mật khẩu không được để trống.',
+        'password.confirmed' => 'Mật khẩu xác nhận không khớp.',
+        'role.required' => 'Vai trò không được để trống.',
+    ]);
 
-        $avatarPath = null;
-        if ($request->hasFile('avatar')) {
-            $avatarPath = $request->file('avatar')->store('avatars', 'public');
-        }
-
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'password' => bcrypt($request->password),  // Mã hóa mật khẩu trước khi lưu
-            'avatar' => $avatarPath,
-            'role' => $request->role,
-        ]);
-
-        return redirect('/login')->with('success', 'Tạo tài khoản thành công!');
+    if ($validator->fails()) {
+        return redirect()->back()->withErrors($validator)->withInput();
     }
+
+    $avatarPath = null;
+    if ($request->hasFile('avatar')) {
+        $avatarPath = $request->file('avatar')->store('avatars', 'public');
+    }
+
+    User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'phone' => $request->phone,
+        'password' => bcrypt($request->password),
+        'avatar' => $avatarPath,
+        'role' => $request->role,
+    ]);
+
+    return redirect('/login')->with('success', 'Tạo tài khoản thành công!');
+}
+
 
     public function showFormLogin()
     {

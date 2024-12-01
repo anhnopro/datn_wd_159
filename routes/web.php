@@ -35,7 +35,7 @@ Route::get('register', [AuthController::class, 'showFormRegister'])->name('auth.
 Route::post('register', [AuthController::class, 'handleRegister'])->name('auth.register');
 Route::get('login', [AuthController::class, 'showFormLogin'])->name('auth.login');
 Route::post('login', [AuthController::class, 'handleLogin'])->name('auth.login');
-Route::post('logout', [AuthController::class, 'logout'])->name('auth.logout');
+Route::get('logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 Route::get('admin/profile', [AuthController::class, 'showProfileAdmin'])->name('admin.profile');
 Route::get('admin/profile/{user}/edit', [ControllersAuthController::class, 'edit'])->name('admin.profile.edit');
@@ -74,7 +74,7 @@ Route::get('landlord_admin/room/{id}/edit', [RoomController::class, 'edit'])->na
 Route::put('landlord_admin/room/{id}', [RoomController::class, 'update'])->name('landlord_admin.room.update');
 Route::delete('landlord_admin/room/{id}', [RoomController::class, 'destroy'])->name('landlord_admin.room.destroy');
 Route::get('landlord_admin/service/{id}', [ServiceController::class, 'show'])->name('landlord_admin.service.show');
-
+Route::get('landlord_admin/room/filter', [RoomController::class, 'filter'])->name('landlord_admin.room.filter');
 
 //Bài viết
 Route::get('landlord_admin/article', [ArticleController::class, 'index'])->name('landlord_admin.article.list');
@@ -102,6 +102,8 @@ Route::post('admin/room/create', [RoomAdminController::class, 'store'])->name('a
 Route::get('admin/room/{id}/edit', [RoomAdminController::class, 'edit'])->name('admin.room.edit');
 Route::put('admin/room/{id}', [RoomAdminController::class, 'update'])->name('admin.room.update');
 Route::delete('admin/room/{id}', [RoomAdminController::class, 'destroy'])->name('admin.room.destroy');
+Route::get('admin/room/filter', [RoomAdminController::class, 'filter'])->name('admin.room.filter');
+
 
 Route::get('admin/category', [CategoryAdminController::class, 'index'])->name('admin.category.list');
 Route::get('admin/category/create', [CategoryAdminController::class, 'create'])->name('admin.category.create');
@@ -152,6 +154,8 @@ Route::middleware(['auth', 'role.admin:0'])->group(function () {
     Route::get('admin/list-renter', [UserController::class, 'showListRenter'])->name('admin.user.listRenter');
 
     Route::get('admin/article', [ArticleAdminController::class, 'index'])->name('admin.article.list');
+    Route::post('admin/article/{id}/rejected', [ArticleAdminController::class, 'rejected'])->name('admin.article.rejected');
+
 
 
     Route::get('admin/article/{id}/detail',
@@ -253,7 +257,8 @@ Route::delete('landlord_admin/article/{id}', [ArticleController::class, 'destroy
     Route::get('landlord_admin/{id}/cancel-reason', [LandlordBookingController::class, 'formCancel'])->name('landlord_admin.booking.formCancel');
 
     Route::get('landlord_admin/{id}/cancelled', [LandlordBookingController::class, 'cancelled'])->name('landlord_admin.booking.cancelled');
-    Route::get('landlord_admin/formInvoice/{id}',[InvoiceController::class,'index'])->name('invoice.indexForm');
+    Route::get('landlord_admin-list-invoice',[InvoiceController::class,'index'])->name('invoice.index');
+    Route::get('landlord_admin/formInvoice/{id}',[InvoiceController::class,'indexForm'])->name('invoice.indexForm');
     Route::post('/invoices/{booking}', [InvoiceController::class, 'store'])->name('invoices.store');
 
 

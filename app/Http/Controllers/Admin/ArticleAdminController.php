@@ -11,11 +11,11 @@ use Illuminate\Http\Request;
 class ArticleAdminController extends Controller
 {
     public function index () {
-        $articles = Article::all();
-        
+        $articles = Article::paginate(4);
+
         return view('admin-main.pages.article.index', compact('articles'));
     }
-    
+
 
 
     public function destroy($id)
@@ -36,7 +36,7 @@ class ArticleAdminController extends Controller
     public function detail($id)
     {
         $article = Article::with(['category', 'room.galleries', 'room.service'])->findOrFail($id);
-        
+
 
         return view('admin-main.pages.article.detail', compact('article'));
     }
@@ -47,5 +47,16 @@ class ArticleAdminController extends Controller
         ]);
         return redirect()->route('admin.article.list')->with('success', 'Duyệt bài thành công!');
     }
+    public function rejected($id)
+    {
+        // Tìm bài viết theo ID
+        $article = Article::findOrFail($id);
 
+        // Cập nhật trạng thái bài viết thành "Đã bị từ chối" (status = 1)
+        $article->status = 1;
+        $article->save();
+
+        // Chuyển hướng về trang danh sách bài viết với thông báo thành công
+        return redirect()->route('admin.article.list')->with('success', 'Bài viết đã bị từ chối.');
+    }
 }

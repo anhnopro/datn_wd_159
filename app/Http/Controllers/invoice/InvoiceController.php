@@ -13,7 +13,13 @@ use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
 {
-    public function index($id)
+    public function index()
+    {
+        $bookings = Booking::where('status','confirmed')->orderBy('created_at', 'desc')->get();;
+
+        return view('landlord_admin.invoice.index', compact('bookings'));
+    }
+    public function indexForm($id)
     {
         $booking = Booking::find($id);
         $room = Room::find($booking->room_id);
@@ -64,6 +70,6 @@ class InvoiceController extends Controller
         });
 
         // Trả về thông báo thành công
-        return redirect()->route('landlord_admin.booking.list')->with('success', 'Hóa đơn đã được tạo và gửi qua email thành công!');
+        return redirect()->route('invoice.index')->with('success', 'Hóa đơn đã được tạo và gửi qua email thành công!');
     }
 }

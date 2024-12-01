@@ -2,9 +2,6 @@
 @section('title')
     Danh sách đặt phòng
 @endsection
-
-
-
 @section('content')
     <div class="table-responsive table-card p-4 shadow-sm rounded">
         <!-- Script để ẩn thông báo -->
@@ -56,35 +53,26 @@
             </thead>
             <tbody>
                 @foreach ($bookings as $booking)
-                <tr>
-                    <td>{{ $booking->username }}</td>
-                    <td>{{ $booking->room->name }}</td>
-                    <td>
-                        @if ($booking->status === 'pending')
-                            <span class="badge bg-primary">Đang chờ xác nhận</span>
-                        @elseif ($booking->status === 'confirmed')
-                            <span class="badge bg-success">Đã xác nhận</span>
-                        @elseif ($booking->status === 'cancelled')
-                            <span class="badge bg-danger">Đã hủy</span>
-                        @endif
-                    </td>
-                    <td>{{ $booking->created_at->format('d/m/Y H:i') }}</td>
-                    <td class="d-flex gap-2">
-                        @if ($booking->status === 'pending')
-                            <form action="{{ route('landlord_admin.booking.confirmed', $booking->id) }}" method="POST" class="d-inline">
-                                @csrf
-                                <button class="btn btn-primary btn-sm"
-                                    onclick="return confirm('Bạn có chắc chắn muốn xác nhận đặt phòng này?')">Xác nhận</button>
-                            </form>
+                    <tr>
+                        <td>{{ $booking->username }}</td>
+                        <td>{{ $booking->room->name }}</td>
+                        <td>
+                            @if ($booking->status === 'pending')
+                                <span class="badge bg-primary">Đang chờ xác nhận</span>
+                            @elseif ($booking->status === 'confirmed')
+                                <span class="badge bg-success">Đã xác nhận</span>
+                            @elseif ($booking->status === 'cancelled')
+                                <span class="badge bg-danger">Đã hủy</span>
+                            @endif
+                        </td>
+                        <td>{{ $booking->created_at->format('d/m/Y H:i') }}</td>
+                        <td class="d-flex gap-2">
+                            <a class="btn btn-warning btn-sm" href="{{route('landlord_admin.booking.detail', $booking->id)}}">Chi tiết</a>
+                            <a href="{{ route('invoice.indexForm', $booking->id) }}"
+                                class="btn btn-danger btn-sm">Tạo hóa đơn</a>
 
-                            <a class="btn btn-warning btn-sm" href="{{ route('landlord_admin.booking.detail', $booking->id) }}">Chi tiết</a>
-                            <a href="{{ route('landlord_admin.booking.formCancel', $booking->id) }}" class="btn btn-danger btn-sm">Từ chối</a>
-                        @elseif ($booking->status === 'confirmed' || $booking->status === 'cancelled')
-                            <a class="btn btn-warning btn-sm" href="{{ route('landlord_admin.booking.detail', $booking->id) }}">Chi tiết</a>
-                        @endif
-                    </td>
-                </tr>
-
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
