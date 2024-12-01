@@ -53,7 +53,7 @@
         </div>
     </section>
 
-    
+
 
 
 
@@ -69,38 +69,41 @@
                         <select name="category_id" class="form-select">
                             <option value="">Tất cả danh mục</option>
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}" 
+                                <option value="{{ $category->id }}"
                                     {{ request('category_id') == $category->id ? 'selected' : '' }}>
                                     {{ $category->name }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
-            
+
                     <!-- Lọc theo giá -->
                     <div class="col-md-3">
                         <select name="price_range" class="form-select">
                             <option value="">Tất cả mức giá</option>
-                            <option value="1" {{ request('price_range') == '1' ? 'selected' : '' }}>Dưới 1 triệu</option>
-                            <option value="2" {{ request('price_range') == '2' ? 'selected' : '' }}>1 - 3 triệu</option>
-                            <option value="3" {{ request('price_range') == '3' ? 'selected' : '' }}>Trên 3 triệu</option>
+                            <option value="1" {{ request('price_range') == '1' ? 'selected' : '' }}>Dưới 1 triệu
+                            </option>
+                            <option value="2" {{ request('price_range') == '2' ? 'selected' : '' }}>1 - 3 triệu
+                            </option>
+                            <option value="3" {{ request('price_range') == '3' ? 'selected' : '' }}>Trên 3 triệu
+                            </option>
                         </select>
                     </div>
-            
+
                     <!-- Lọc theo địa chỉ -->
                     <div class="col-md-3">
                         <input type="text" name="address" class="form-control" placeholder="Nhập địa chỉ"
                             value="{{ request('address') }}">
                     </div>
-            
+
                     <!-- Nút Lọc -->
                     <div class="col-md-3">
                         <button type="submit" class="btn btn-primary w-100">Lọc</button>
                     </div>
                 </div>
             </form>
-            
-            
+
+
             <div class="room-outer">
                 <div class="row">
                     @foreach ($articlesVip as $article)
@@ -108,7 +111,8 @@
                             <div class="card h-100 shadow-sm border-0">
                                 <!-- Room Image -->
                                 <div class="position-relative">
-                                    <img src="{{ asset('storage/' . $article->room->image) }}" alt="Room Image" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;">
+                                    <img src="{{ asset('storage/' . $article->room->image) }}" alt="Room Image"
+                                        class="card-img-top img-fluid" style="height: 200px; object-fit: cover;">
                                     <div class="position-absolute top-0 end-0 bg-dark text-white px-2 py-1 rounded">
                                         <i class="fas fa-camera"></i> 3
                                     </div>
@@ -117,25 +121,39 @@
                                 <!-- Room Content -->
                                 <div class="card-body">
                                     <!-- Title -->
-                                    <h5 class="card-title text-truncate mb-2" title="{{ $article->title }}">{{ $article->title }}</h5>
+                                    <h5 class="card-title text-truncate mb-2" title="{{ $article->title }}">
+                                        {{ $article->title }}</h5>
 
                                     <!-- Price and Area -->
                                     <p class="text-danger fw-bold mb-1">
                                         {{ number_format($article->room->price, 0, ',', '.') }} VNĐ &nbsp;·&nbsp;
-                                        {{ $article->room->area  }} m²
+                                        {{ $article->room->area }} m²
                                     </p>
 
                                     <!-- Address -->
                                     <p class="text-muted small mb-1">
                                         <i class="fas fa-map-marker-alt"></i>
-                                        {{ $article->room->address
-                                            ? '...' . substr($article->room->address, -20)
-                                            : 'Địa chỉ chưa cập nhật' }}
+                                        {{ $article->room->address ? '...' . substr($article->room->address, -20) : 'Địa chỉ chưa cập nhật' }}
                                     </p>
 
 
-                                    <!-- Posted Date -->
-                                    <p class="text-muted small">Đăng hôm nay</p>
+
+                                    @php
+                                    $updatedAt = \Carbon\Carbon::parse($article->updated_at);
+                                    $daysDiff = $updatedAt->diffInDays(\Carbon\Carbon::now());
+                                @endphp
+
+                                <p class="text-muted small">
+                                    @if($daysDiff === 0)
+                                        Đăng hôm nay
+                                    @elseif($daysDiff === 1)
+                                        Đăng hôm qua
+                                    @else
+                                        Đăng {{ $daysDiff }} ngày trước
+                                    @endif
+                                </p>
+
+
                                 </div>
 
                                 <!-- Card Footer -->
@@ -143,7 +161,8 @@
                                     <button class="btn btn-outline-danger btn-sm">
                                         <i class="fas fa-heart"></i>
                                     </button>
-                                    <a href="{{ route('guest.detail', $article->id) }}" class="btn btn-primary btn-sm">Chi tiết</a>
+                                    <a href="{{ route('guest.detail', $article->id) }}" class="btn btn-primary btn-sm">Chi
+                                        tiết</a>
                                 </div>
                             </div>
                         </div>
@@ -208,8 +227,8 @@
     </section>
 
     <section class="rooms rooms-style2">
-       
-        
+
+
         <div class="container">
             <div class="section-title">
                 <h2>Phòng trọ <span>nhiều lượt xem nhất</span></h2>
@@ -221,7 +240,8 @@
                             <div class="card h-100 shadow-sm border-0">
                                 <!-- Room Image -->
                                 <div class="position-relative">
-                                    <img src="{{ asset('storage/' . $article->room->image) }}" alt="Room Image" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;">
+                                    <img src="{{ asset('storage/' . $article->room->image) }}" alt="Room Image"
+                                        class="card-img-top img-fluid" style="height: 200px; object-fit: cover;">
                                     <div class="position-absolute top-0 end-0 bg-dark text-white px-2 py-1 rounded">
                                         <i class="fas fa-camera"></i> 3
                                     </div>
@@ -230,20 +250,19 @@
                                 <!-- Room Content -->
                                 <div class="card-body">
                                     <!-- Title -->
-                                    <h5 class="card-title text-truncate mb-2" title="{{ $article->title }}">{{ $article->title }}</h5>
+                                    <h5 class="card-title text-truncate mb-2" title="{{ $article->title }}">
+                                        {{ $article->title }}</h5>
 
                                     <!-- Price and Area -->
                                     <p class="text-danger fw-bold mb-1">
                                         {{ number_format($article->room->price, 0, ',', '.') }} VNĐ &nbsp;·&nbsp;
-                                        {{ $article->room->area  }} m²
+                                        {{ $article->room->area }} m²
                                     </p>
 
                                     <!-- Address -->
                                     <p class="text-muted small mb-1">
                                         <i class="fas fa-map-marker-alt"></i>
-                                        {{ $article->room->address
-                                            ? '...' . substr($article->room->address, -20)
-                                            : 'Địa chỉ chưa cập nhật' }}
+                                        {{ $article->room->address ? '...' . substr($article->room->address, -20) : 'Địa chỉ chưa cập nhật' }}
                                     </p>
 
 
@@ -256,7 +275,8 @@
                                     <button class="btn btn-outline-danger btn-sm">
                                         <i class="fas fa-heart"></i>
                                     </button>
-                                    <a href="{{ route('guest.detail', $article->id) }}" class="btn btn-primary btn-sm">Chi tiết</a>
+                                    <a href="{{ route('guest.detail', $article->id) }}"
+                                        class="btn btn-primary btn-sm">Chi tiết</a>
                                 </div>
                             </div>
                         </div>

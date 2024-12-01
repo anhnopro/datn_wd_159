@@ -17,6 +17,7 @@ class Invoice extends Model
         'water',
         'total_price',
         'user_id',
+        'payment_date'
     ];
 
     // Quan hệ với Booking

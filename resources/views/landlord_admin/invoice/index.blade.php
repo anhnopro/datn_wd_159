@@ -57,24 +57,26 @@
                         <td>{{ $booking->username }}</td>
                         <td>{{ $booking->room->name }}</td>
                         <td>
-                            @if ($booking->status === 'pending')
-                                <span class="badge bg-primary">Đang chờ xác nhận</span>
-                            @elseif ($booking->status === 'confirmed')
-                                <span class="badge bg-success">Đã xác nhận</span>
-                            @elseif ($booking->status === 'cancelled')
-                                <span class="badge bg-danger">Đã hủy</span>
+                            @if ($booking->invoice_status === 'not_created')
+                                <span class="badge bg-primary">Chưa tạo hóa đơn</span>
+                            @elseif ($booking->invoice_status === 'created')
+                                <span class="badge bg-success">Đã hóa đơn</span>
                             @endif
                         </td>
                         <td>{{ $booking->created_at->format('d/m/Y H:i') }}</td>
                         <td class="d-flex gap-2">
-                            <a class="btn btn-warning btn-sm" href="{{route('landlord_admin.booking.detail', $booking->id)}}">Chi tiết</a>
-                            <a href="{{ route('invoice.indexForm', $booking->id) }}"
-                                class="btn btn-danger btn-sm">Tạo hóa đơn</a>
+                            <a class="btn btn-warning btn-sm" href="{{ route('landlord_admin.booking.detail', $booking->id) }}">Chi tiết</a>
 
+                            @if ($booking->invoice_status === 'not_created')
+                                <a href="{{ route('invoice.indexForm', $booking->id) }}" class="btn btn-danger btn-sm">Tạo hóa đơn</a>
+                            @elseif ($booking->invoice_status === 'created')
+                                <a href="" class="btn btn-info btn-sm">Xem trạng thái hóa đơn</a>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
             </tbody>
+
         </table>
     </div>
 @endsection

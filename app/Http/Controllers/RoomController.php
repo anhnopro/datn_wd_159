@@ -16,11 +16,18 @@ class RoomController extends Controller
 {
 
     public function index(Request $request)
-    {
-        $services = Service::all();
-    $rooms = Room::orderByDesc('id')->paginate(4);
-        return view('landlord_admin.pages.room.index', compact('rooms','services'));
-    }
+{
+    // Lấy tất cả các dịch vụ
+    $services = Service::all();
+    $userId = auth()->id();
+    $rooms = Room::where('user_id', $userId)
+                ->orderByDesc('id')
+                ->paginate(4);
+
+    // Trả về view cùng dữ liệu
+    return view('landlord_admin.pages.room.index', compact('rooms', 'services'));
+}
+
 
     public function create()
     {
