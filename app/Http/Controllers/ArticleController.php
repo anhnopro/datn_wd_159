@@ -145,6 +145,5 @@ class ArticleController extends Controller
         return view('landlord_admin.pages.article.detail', compact('article'));
     }
 
-
 }
 

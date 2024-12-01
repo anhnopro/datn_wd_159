@@ -44,31 +44,49 @@
             </thead>
             <tbody>
                 @foreach ($articles as $article)
-                    <tr>
-                        <td>{{ $article->title }}</td>
-                        <td>{{ $article->room->name  }}</td>
-                        <td>{{$article->type}}</td>
-                        <td>{{ $article->category->name}}</td>
-                        <td>
-                            @if($article->status===0)
+                <tr>
+                    <td>{{ $article->title }}</td>
+                    <td>{{ $article->room->name }}</td>
+                    <td>{{ $article->type }}</td>
+                    <td>{{ $article->category->name }}</td>
+                    <td>
+                        @if($article->status === 0)
                             <span class="badge bg-primary">Đang chờ kiểm duyệt</span>
-                            @elseif ($article->status===1)
-                                <span class="badge bg-danger">Đã bị từ chối</span>
-                             @elseif ($article->status===2)
-                             <span class="badge bg-success">Đã được duyệt</span>
-                             @endif
-                        </td>
-                        <td class="d-flex gap-3">
+                        @elseif ($article->status === 1)
+                            <span class="badge bg-danger">Đã bị từ chối</span>
+                        @elseif ($article->status === 2)
+                            <span class="badge bg-success">Đã được duyệt</span>
+                        @endif
+                    </td>
+                    <td class="d-flex gap-3">
+                        {{-- Chi tiết bài viết luôn khả dụng --}}
+                        <a class="btn btn-primary" href="{{ route('landlord_admin.article.detail', $article->id) }}">Chi tiết</a>
+
+                        {{-- Logic nút Sửa và Xóa --}}
+                        @if($article->status === 0)
+                            {{-- Trạng thái đang chờ kiểm duyệt: Có thể chỉnh sửa và xóa --}}
                             <a class="btn btn-warning" href="{{ route('landlord_admin.article.edit', $article->id) }}">Sửa</a>
-                            <a class="btn btn-primary" href="{{ route('landlord_admin.article.detail', $article->id) }}">Chi tiết</a>
                             <form action="{{ route('landlord_admin.article.destroy', $article->id) }}" method="POST"
-                                onsubmit="return confirm('Bạn có chắc chắn muốn xóa phòng này không?');">
+                                  onsubmit="return confirm('Bạn có chắc chắn muốn xóa bài viết này không?');">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Xóa</button>
                             </form>
-                        </td>
-                    </tr>
+                        @elseif($article->status === 1)
+                            {{-- Trạng thái đã bị từ chối: Chỉ có thể xóa --}}
+                            <form action="{{ route('landlord_admin.article.destroy', $article->id) }}" method="POST"
+                                  onsubmit="return confirm('Bạn có chắc chắn muốn xóa bài viết này không?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Xóa</button>
+                            </form>
+                        @elseif($article->status === 2)
+                            {{-- Trạng thái đã được duyệt: Không thể chỉnh sửa hoặc xóa --}}
+                            <span class="text-muted">Không thể chỉnh sửa hoặc xóa</span>
+                        @endif
+                    </td>
+                </tr>
+
                 @endforeach
             </tbody>
         </table>

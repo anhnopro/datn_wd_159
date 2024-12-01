@@ -23,9 +23,9 @@ class AuthController extends Controller
         'phone' => 'required|regex:/^\+?[0-9]{10,15}$/|unique:users,phone',
         'password' => 'required|string|min:8|confirmed',
         'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        'role' => 'required|in:admin,user,moderator'
+        'role' => 'required'
     ], [
-        
+
         'name.required' => 'Tên không được để trống.',
         'name.min' => 'Tên phải có ít nhất 3 ký tự.',
         'email.required' => 'Email không được để trống.',
@@ -35,7 +35,6 @@ class AuthController extends Controller
         'password.required' => 'Mật khẩu không được để trống.',
         'password.confirmed' => 'Mật khẩu xác nhận không khớp.',
         'role.required' => 'Vai trò không được để trống.',
-        'role.in' => 'Vai trò không hợp lệ.',
     ]);
 
     if ($validator->fails()) {

@@ -595,7 +595,7 @@
                                                             <h6 class="mb-0 text-muted">408</h6>
                                                         </div>
                                                     </div>
-                                                </div><!-- end row -->
+                                                </div>
                                             </div>
                                         </div>
 

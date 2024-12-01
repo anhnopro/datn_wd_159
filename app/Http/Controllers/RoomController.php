@@ -59,8 +59,9 @@ class RoomController extends Controller
             ]
         );
 
+        $userId = Auth::user()->id;
 
-           $id_user=User::get()->role;
+
         $mainImagePath = null;
 
         if ($request->hasFile('images')) {
@@ -79,7 +80,7 @@ class RoomController extends Controller
                 'description' => $request->description,
                 'price' => $request->price,
                 'area' => $request->area,
-                'user_id' => $id_user,
+                'user_id' => $userId,
                 'status' => 1,
                 'image' => $mainImagePath, // Ảnh đầu tiên được lưu ở đây
             ]);
@@ -214,17 +215,16 @@ class RoomController extends Controller
             return $query->where('price', '>', 10000000);
         }
     })
-    
+
     ->when($request->status !== null, function ($query) use ($request) {
         // Chuyển đổi giá trị 'status' thành boolean
         $status = $request->status == '1'; // '1' -> true, '0' -> false
         return $query->where('status', $status);
     })
     ->paginate(4);
-    
+
     return view('landlord_admin.pages.room.filter', compact('rooms', 'services'));
     }
 
-    
 }
 
