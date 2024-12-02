@@ -19,9 +19,12 @@ class RoomAdminController extends Controller
 
     public function index()
     {
-        $rooms = Room::orderByDesc('id')->paginate(4);
+        $userId = auth()->id();
+        $rooms = Room::where('user_id', $userId)
+            ->orderByDesc('id')
+            ->paginate(4);
         $services = Service::all();
-        return view('admin-main.pages.room.index', compact('rooms','services'));
+        return view('admin-main.pages.room.index', compact('rooms', 'services'));
     }
 
     public function create()
@@ -39,19 +42,17 @@ class RoomAdminController extends Controller
         $request->validate(
             [
                 'name' => 'required|string|max:255',
-                'username' => 'required|exists:users,name',
+                'area' => 'required',
                 'service_id' => 'required|exists:services,id',
                 'images' => 'required', // Thêm validate tổng thể cho images
                 'images.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048', // Xác thực từng ảnh trong mảng
                 'description' => 'required',
                 'address' => 'required',
                 'price' => 'required|numeric',
-                'area' => 'required',
             ],
             [
                 'name.required' => 'Bạn phải nhập tên phòng trọ',
-                'username.required' => 'Bạn phải nhập tên chủ phòng trọ',
-                'username.exists' => 'Tên chủ trọ không tồn tại trong hệ thống.',
+                'area.required' => 'Bạn hãy nhập kích thước phòng trọ',
                 'service_id.required' => 'Bạn phải lựa chọn dịch vụ phòng trọ',
                 'price.required' => 'Bạn phải nhập giá phòng trọ',
                 'price.numeric' => 'Bạn phải nhập giá là số',
@@ -61,39 +62,35 @@ class RoomAdminController extends Controller
                 'images.*.image' => 'Tệp được tải lên phải là hình ảnh',
                 'images.*.mimes' => 'Hình ảnh phải có định dạng jpeg, png, jpg, hoặc webp',
                 'images.*.max' => 'Hình ảnh không được vượt quá 2MB',
-                'area.required' => 'Bạn hãy nhập kích thước phòng trọ',
             ]
         );
 
-        $user = User::where('name', $request->input('username'))->first();
-        $user_id = $user->id;
+        $userId = Auth::user()->id;
 
-        // Kiểm tra category_id, nếu không có giá trị thì gán 0
-        $categoryId = $request->category_id ?? 0;
 
-        // Xử lý upload nhiều ảnh và lấy ảnh đầu tiên để lưu vào `rooms`
-        $mainImagePath = null; // Biến lưu ảnh đầu tiên để dùng cho `rooms`
+        $mainImagePath = null;
 
         if ($request->hasFile('images')) {
             $images = $request->file('images');
 
-            // Lấy ảnh đầu tiên để lưu vào trường `image` của `rooms`
+
             $firstImage = $images[0];
             $mainImagePath = $firstImage->store('rooms', 'public'); // Lưu ảnh đầu tiên vào thư mục 'rooms' trong 'public'
 
-            // Tạo mới phòng, lưu ảnh đầu tiên vào `rooms`
+
             $room = Room::create([
                 'name' => $request->name,
-                'category_id' => $categoryId,
+                // 'category_id' => $categoryId,
                 'service_id' => $request->service_id,
                 'address' => $request->address,
                 'description' => $request->description,
                 'price' => $request->price,
-                'user_id' => $user_id,
-                'status' => 1,
                 'area' => $request->area,
+                'user_id' => $userId,
+                'status' => 1,
                 'image' => $mainImagePath, // Ảnh đầu tiên được lưu ở đây
             ]);
+
 
             // Kiểm tra nếu phòng được tạo thành công
             if (!$room) {
@@ -112,6 +109,7 @@ class RoomAdminController extends Controller
         } else {
             return redirect()->back()->withErrors(['images' => 'Hình ảnh là bắt buộc.']);
         }
+
 
         // Chuyển hướng với thông báo thành công
         return  redirect()->route('admin.room.list')->with('success', 'Thêm thành công dữ liệu nhật phòng thành công!');
@@ -206,30 +204,30 @@ class RoomAdminController extends Controller
     {
         // Lấy danh sách dịch vụ để hiển thị trong dropdown
         $services = Service::all();
-    
+
         // Lọc phòng theo loại dịch vụ, giá và trạng thái nếu có
         $rooms = Room::when($request->service_type, function ($query) use ($request) {
             return $query->where('service_id', $request->service_type);
         })
-        ->when($request->price_range, function ($query) use ($request) {
-            if ($request->price_range == '1') {
-                return $query->where('price', '<', 3000000);
-            }
-            if ($request->price_range == '2') {
-                return $query->whereBetween('price', [3000000, 10000000]);
-            }
-            if ($request->price_range == '3') {
-                return $query->where('price', '>', 10000000);
-            }
-        })
-        
-        ->when($request->status !== null, function ($query) use ($request) {
-            // Chuyển đổi giá trị 'status' thành boolean
-            $status = $request->status == '1'; // '1' -> true, '0' -> false
-            return $query->where('status', $status);
-        })
-        ->paginate(4);
-        
+            ->when($request->price_range, function ($query) use ($request) {
+                if ($request->price_range == '1') {
+                    return $query->where('price', '<', 3000000);
+                }
+                if ($request->price_range == '2') {
+                    return $query->whereBetween('price', [3000000, 10000000]);
+                }
+                if ($request->price_range == '3') {
+                    return $query->where('price', '>', 10000000);
+                }
+            })
+
+            ->when($request->status !== null, function ($query) use ($request) {
+                // Chuyển đổi giá trị 'status' thành boolean
+                $status = $request->status == '1'; // '1' -> true, '0' -> false
+                return $query->where('status', $status);
+            })
+            ->paginate(4);
+
         return view('admin-main.pages.room.filter', compact('rooms', 'services'));
     }
 }

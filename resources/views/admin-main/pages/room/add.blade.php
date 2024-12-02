@@ -1,4 +1,4 @@
-@extends('admin-main.master')
+@extends('landlord_admin.master')
 @section('title')
     Thêm Phòng
 @endsection
@@ -16,35 +16,26 @@
                         <div class="row gy-4">
                             <!-- Tên phòng -->
                             <div class="col-md-6">
-                                <label for="name" class="form-label">Tên Phòng *</label>
+                                <label for="name" class="form-label">Tên Phòng <span style="color:red;"> *<span></label>
                                 <input type="text" name="name" class="form-control" value="{{ old('name') }}">
                                 @error('name')
-                                    <p id="name-error" style="color: red;">{{ $message }}</p>
+                                    <p class="mt-2" id="name-error" style="color: red;">{{ $message }}</p>
                                 @enderror
-                                <p id="name-error" style="color: red; display: none;"></p>
+                                <p class="mt-2" id="name-error" style="color: red; display: none;"></p>
                             </div>
-
-                            <div class="col-md-6">
-                                <label for="username" class="form-label">Chủ trọ *</label>
-                                <input type="text" name="username" class="form-control" >
-                                @error('username')
-                                    <p id="name-error" style="color: red;">{{ $message }}</p>
-                                @enderror
-                                <p id="name-error" style="color: red; display: none;"></p>
-                            </div>
-
                             <!-- Dịch vụ -->
                             <div class="col-md-6">
-                                <label for="service" class="form-label">Chọn Dịch Vụ *</label>
+                                <label for="service" class="form-label">Chọn Dịch Vụ <span style="color:red;">
+                                        *<span></label>
                                 <select name="service_id" id="service" class="form-select">
                                     <option value="">Chọn dịch vụ</option>
                                     @foreach ($services as $service)
                                         <option value="{{ $service->id }}">{{ $service->service_type }}</option>
                                     @endforeach
                                 </select>
-                                <p id="service-error" style="color: red; display: none;"></p>
+                                <p class="mt-2" id="service-error" style="color: red; display: none;"></p>
                                 @error('service_id')
-                                    <p style="color: red">{{ $message }}</p>
+                                    <p class="mt-2" style="color: red">{{ $message }}</p>
                                 @enderror
                             </div>
 
@@ -58,51 +49,64 @@
 
                             <!-- Giá -->
                             <div class="col-md-6">
-                                <label for="price" class="form-label">Giá *</label>
-                                <input type="number" name="price" class="form-control" value="{{ old('price') }}">
-                                <p id="price-error" style="color: red; display: none;"></p>
+                                <label for="price" class="form-label">Giá <span style="color:red;"> *<span></label>
+                                <input
+                                    type="text"
+                                    id="formatted-price"
+                                    class="form-control"
+                                    value="{{ old('price') }}"
+                                    oninput="formatPrice(this)"
+                                    onblur="syncHiddenInput()"
+                                >
+                                <input type="hidden" id="price" name="price" value="{{ old('price') }}">
+                                <p class="mt-2" id="price-error" style="color: red; display: none;"></p>
                                 @error('price')
-                                    <p style="color: red">{{ $message }}</p>
+                                    <p class="mt-2" style="color: red">{{ $message }}</p>
                                 @enderror
                             </div>
 
+
                             <!-- Địa chỉ -->
                             <div class="col-md-6">
-                                <label for="address" class="form-label">Địa chỉ *</label>
+                                <label for="address" class="form-label">Địa chỉ <span style="color:red;"> *<span></label>
                                 <input type="text" name="address" class="form-control" value="{{ old('address') }}">
-                                <p id="address-error" style="color: red; display: none;"></p>
+                                <p class="mt-2" id="address-error" style="color: red; display: none;"></p>
                                 @error('address')
-                                    <p style="color: red">{{ $message }}</p>
+                                    <p class="mt-2" style="color: red">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div class="col-md-6">
-                                <label for="area" class="form-label">M^2 *</label>
+                                <label for="area" class="form-label">Diện tích(mét vuông) <span style="color:red;">
+                                        *<span></label>
                                 <input type="text" name="area" class="form-control" value="{{ old('area') }}">
-                                <p id="area-error" style="color: red; display: none;"></p>
+                                <p class="mt-2" id="area-error" style="color: red; display: none;"></p>
                                 @error('area')
-                                    <p style="color: red">{{ $message }}</p>
+                                    <p class="mt-2" style="color: red">{{ $message }}</p>
                                 @enderror
                             </div>
 
                             <!-- Hình ảnh -->
                             <div class="col-md-12">
-                                <label for="images" class="form-label fw-bold">Hình Ảnh *</label>
-                                <input type="file" class="form-control shadow-sm" name="images[]" id="images" multiple accept="image/*">
+                                <label for="images" class="form-label fw-bold">Hình Ảnh <span style="color:red;">
+                                        *<span></label>
+                                <input type="file" class="form-control shadow-sm" name="images[]" id="images" multiple
+                                    accept="image/*">
                                 <div id="preview-images" class="row mt-3 gy-3"></div>
                                 <small class="text-muted d-block mt-1">Chọn nhiều ảnh bằng cách nhấn giữ phím Ctrl.</small>
-                                <p id="images-error" style="color: red; display: none;"></p>
+                                <p class="mt-2" id="images-error" style="color: red; display: none;"></p>
                                 @error('images')
-                                    <p style="color: red">{{ $message }}</p>
+                                    <p class="mt-2" style="color: red">{{ $message }}</p>
                                 @enderror
                             </div>
 
                             <!-- Mô tả -->
                             <div class="col-md-12">
-                                <label for="description" class="form-label fw-bold">Mô Tả *</label>
+                                <label for="description" class="form-label fw-bold">Mô Tả <span style="color:red;">
+                                        *<span></label>
                                 <textarea id="editor" class="form-control shadow-sm" name="description" rows="4">{{ old('description') }}</textarea>
-                                <p id="description-error" style="color: red; display: none;"></p>
+                                <p class="mt-2" id="description-error" style="color: red; display: none;"></p>
                                 @error('description')
-                                    <p style="color: red">{{ $message }}</p>
+                                    <p class="mt-2" style="color: red">{{ $message }}</p>
                                 @enderror
                             </div>
 
@@ -122,6 +126,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    <script src="{{asset('room/formatPrice.js')}}"></script>
     <script>
         $(document).ready(function() {
             $('#service').change(function() {
@@ -157,4 +162,5 @@
     <script src="{{ asset('room/editor.js') }}"></script>
     <script src="{{ asset('room/images.js') }}"></script>
     <script src="{{ asset('room/validate-room.js') }}"></script>
+
 @endsection

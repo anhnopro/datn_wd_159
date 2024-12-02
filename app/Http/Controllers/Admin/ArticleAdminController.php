@@ -12,7 +12,6 @@ class ArticleAdminController extends Controller
 {
     public function index () {
         $articles = Article::paginate(4);
-
         return view('admin-main.pages.article.index', compact('articles'));
     }
 

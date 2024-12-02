@@ -13,6 +13,7 @@
         <table class="table table-nowrap table-striped-columns mb-0">
             <thead class="table-light">
                 <tr>
+                    <th>Tên người đăng</th>
                     <th>Tiêu đề</th>
                     <th>Phòng</th>
                     <th>Danh mục</th>
@@ -23,6 +24,7 @@
             <tbody>
                 @foreach ($articles as $article)
                 <tr>
+                    <th>{{$article->user->name}}</th>
                     <td>{{ $article->title }}</td>
                     <td>{{ $article->room->name ?? 'Không phòng' }}</td>
                     <td>{{ $article->category->name ?? 'Không danh mục' }}</td>

@@ -106,7 +106,7 @@
 
             <div class="room-outer">
                 <div class="row">
-                    @foreach ($articlesVip as $article)
+                    @foreach ($articlesUrgent as $article)
                         <div class="col-lg-3 col-md-4 mb-4">
                             <div class="card h-100 shadow-sm border-0">
                                 <!-- Room Image -->
