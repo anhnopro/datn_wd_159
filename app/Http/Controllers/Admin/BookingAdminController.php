@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class BookingAdminController extends Controller
 {
-    // public function index() {
-    //     $bookings = Booking::all();
-    //     // dd($bookings);
-    //     return view('admin-main.pages.booking.index', compact('bookings'));
-    // }
+    public function index() {
+        $bookings = Booking::all();
+        // dd($bookings);
+        return view('admin-main.pages.booking.index', compact('bookings'));
+    }
 }

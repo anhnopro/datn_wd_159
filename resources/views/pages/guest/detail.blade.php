@@ -153,7 +153,7 @@
         </div>
     </section>
 
-    <section class="check-in">
+    {{-- <section class="check-in">
         <div class="container">
             <div class="form-content">
                 <div class="table-item">
@@ -605,5 +605,5 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 @endsection

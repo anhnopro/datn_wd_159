@@ -55,11 +55,14 @@ class HomeController extends Controller
         $categoryId = $request->get('category_id');
         $priceRange = $request->get('price');
         $address = $request->get('address');
-
+        
         // Áp dụng logic lọc
-        $articles = Article::with('room')
+       
+        
+        
+            $articles = Article::with('room')
             ->when($categoryId, function ($query, $categoryId) {
-                $query->where('category_id', $categoryId);
+                $query->where('category_id', $categoryId)->where('status',2);
             })
             ->when($priceRange, function ($query, $priceRange) {
                 if ($priceRange == 1) {
@@ -71,10 +74,11 @@ class HomeController extends Controller
                 }
             })
             ->when($address, function ($query, $address) {
-                $query->whereHas('room', fn($q) => $q->where('address', 'LIKE', '%' . $address . '%'));
+                $query->whereHas('room', fn($q) => $q->where('address', 'LIKE', '%' . $address . '%')
+                );
             })
-            ->get();
-
+            ->where('status',2)->get();
+        
         // Trả về view với kết quả lọc
         return view('pages.guest.filter', compact('articles'));
     }

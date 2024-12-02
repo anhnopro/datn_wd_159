@@ -49,31 +49,47 @@
                     </ul>
                 </div>
                 <div class="links links-right pull-right">
-                    <ul>
-                        <li>
-                            <a href="{{ route('auth.login') }}" data-bs-target="#login"><i class="fa fa-user"
-                                    aria-hidden="true"></i> Login</a>
-                        </li>
-                        <li>
-                            <a href="auth.register" data-bs-target="#register"><i class="fa fa-pen"
-                                    aria-hidden="true"></i> Register</a>
-                        </li>
-                        <li>
-                            <ul class="social-links">
+                    <ul class="menu_user">
+                        @if (Auth::user())
+                            @if (Auth::user()->role == 2)
                                 <li>
-                                    <a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+                                    {{-- <a href="{{ route('auth.logout') }}" onclick="return confirm('Bạn có chắc muốn đăng xuất?')"><i class="fa-solid fa-right-from-bracket"></i>Đăng Xuất</a> --}}
+                                    <form action="{{ route('auth.logout') }}" method="POST">
+                                        @csrf
+                                        
+                                        <button class="dropdown-item"><i
+                                                class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>Đăng xuất</button>
+                                    </form>
                                 </li>
+                                <li><a href="{{ route('admin.profile') }}"><i class="fa-solid fa-user"></i>Profile</a></li>
+                            @elseif (Auth::user()->role == 0)
                                 <li>
-                                    <a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                                    <form action="{{ route('auth.logout') }}" method="POST">
+                                    @csrf
+                                    
+                                    <button class="dropdown-item"><i
+                                            class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>Đăng xuất</button>
+                                </form>
                                 </li>
-                                <li>
-                                    <a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a>
-                                </li>
-                            </ul>
-                        </li>
+                                <li><a href="{{ route('guest.profile') }}"><i class="fa-solid fa-user"></i>Profile</a></li>
+                                <li><a href="{{ route('admin.room.list') }}"><i class="fa-solid fa-people-roof"></i>Trang Admin</a></li>
+                                
+                            @else
+
+                                <li><form action="{{ route('auth.logout') }}" method="POST">
+                                    @csrf
+                                    
+                                    <button class="dropdown-item"><i
+                                            class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>Đăng xuất</button>
+                                </form></li>
+                                <li><a href="{{ route('guest.profile') }}"><i class="fa-solid fa-user"></i>Profile</a></li>
+                                <li><a href="{{ route('landlord_admin.room.list') }}"><i class="fa-solid fa-user"></i>Quản Lý Phòng</a></li>
+                            @endIf
+                            
+                        @else
+                            <li><a href="{{ route('auth.register') }}"><i class="fa-solid fa-registered"></i>Đăng Ký</a></li>
+                            <li><a href="{{ route('auth.login') }}"><i class="fa-solid fa-right-to-bracket"></i>Đăng Nhập</a></li>
+                        @endif
                     </ul>
                 </div>
             </div>

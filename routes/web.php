@@ -33,6 +33,7 @@ use App\Http\Controllers\Landlord\BookingController as LandlordBookingController
 // Đăng ký, đăng nhập
 Route::get('register', [AuthController::class, 'showFormRegister'])->name('auth.register');
 Route::post('register', [AuthController::class, 'handleRegister'])->name('auth.register');
+// Route::match(['GET','POST'],'login',[AuthController::class,'handleLogin'])->name('auth.login');
 Route::get('login', [AuthController::class, 'showFormLogin'])->name('auth.login');
 Route::post('login', [AuthController::class, 'handleLogin'])->name('auth.login');
 Route::post('logout', [AuthController::class, 'logout'])->name('auth.logout');
@@ -114,21 +115,21 @@ Route::delete('admin/category/{id}', [CategoryAdminController::class, 'destroy']
 
 
 //** guest  */
-Route::get('guest/home', [HomeController::class, 'home'])->name('guest.home');
-Route::get('guest/detail/{article}', [HomeController::class, 'detail'])->name('guest.detail');
 
 Route::post('/password/send-confirmation-code',
     [PasswordController::class, 'sendConfirmationCode'])->name('password.sendConfirmationCode');
 Route::post('/password/confirm-change',
     [PasswordController::class, 'confirmPasswordChange'])->name('password.confirmChange');
 
-// GUEST
-Route::middleware(['role'])->group(function () {
+// 
     Route::get('guest/home', [HomeController::class, 'home'])->name('guest.home');
     Route::get('guest/detail/{article}', [HomeController::class, 'detail'])->name('guest.detail');
+    Route::get('guest/filter', [HomeController::class, 'filter'])->name('guest.filter');
+
+Route::middleware(['role'])->group(callback: function () {
+   
     Route::get('/guest/booking/{id}', [BookingGuestController::class, 'booking'])->name('guest.info.booking');
     Route::post('guest/booking', [BookingGuestController::class, 'store'])->name('guest.booking');
-    Route::get('guest/filter', [HomeController::class, 'filter'])->name('guest.filter');
 
 });
 
@@ -193,7 +194,7 @@ Route::get('landlord_admin/service/{id}', [ServiceController::class, 'show'])->n
 });
 
 // LANDLORD (chu tro)
-Route::middleware(['auth', 'role.admin:1'])->group(function () {
+Route::middleware(['auth', 'role.landlord:1'])->group(function () {
     Route::get('landlord_admin/dashboard', function () {
         return view('landlord_admin.dashboard');
     })->name('landlord_admin.dashboard');

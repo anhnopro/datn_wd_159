@@ -57,10 +57,18 @@
 
 
 
+
     <section class="rooms rooms-style2">
+       
         <div class="container">
             <div class="section-title">
                 <h2>Phòng trọ <span>nổi bật</span></h2>
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
             </div>
             <form action="{{ route('guest.filter') }}" method="GET" class="mb-4">
                 <div class="row">
@@ -79,11 +87,11 @@
             
                     <!-- Lọc theo giá -->
                     <div class="col-md-3">
-                        <select name="price_range" class="form-select">
+                        <select name="price" class="form-select">
                             <option value="">Tất cả mức giá</option>
-                            <option value="1" {{ request('price_range') == '1' ? 'selected' : '' }}>Dưới 1 triệu</option>
-                            <option value="2" {{ request('price_range') == '2' ? 'selected' : '' }}>1 - 3 triệu</option>
-                            <option value="3" {{ request('price_range') == '3' ? 'selected' : '' }}>Trên 3 triệu</option>
+                            <option value="1" {{ request('price') == '1' ? 'selected' : '' }}>Dưới 1 triệu</option>
+                            <option value="2" {{ request('price') == '2' ? 'selected' : '' }}>1 - 3 triệu</option>
+                            <option value="3" {{ request('price') == '3' ? 'selected' : '' }}>Trên 3 triệu</option>
                         </select>
                     </div>
             

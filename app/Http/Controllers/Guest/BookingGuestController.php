@@ -8,16 +8,23 @@ use App\Models\Booking;
 use App\Models\Gallery;
 use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BookingGuestController extends Controller
 {
     public function booking($id)
     {
+        $user_id=Auth::id();
+        if(isset($user_id)){
         $article = Article::find($id);
         $idRoom = $article->room->id;
         $room = Room::find($idRoom);
         $images = Gallery::where('room_id', $idRoom)->get();
         return view('pages.guest.booking', compact('article', 'room', 'images'));
+        }
+        else{
+            return view('auths.login');
+        }
     }
 
 

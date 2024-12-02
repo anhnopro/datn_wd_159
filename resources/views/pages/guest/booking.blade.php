@@ -22,6 +22,7 @@
 
     <section class="content">
         <div class="container">
+            
             <div class="reservation-links text-center">
                 <h2 class="mar-bottom-60 text-capitalize">Đặt phòng</h2>
                 <div class="reservation-links-content">
@@ -210,4 +211,6 @@
             </div>
         </div>
     </section>
+   
+
 @endsection

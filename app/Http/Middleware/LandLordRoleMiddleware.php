@@ -17,16 +17,16 @@ class LandLordRoleMiddleware
      */
     public function handle($request, Closure $next, $role)
     {
-        // Check if the user is authenticated
-        if (!Auth::check()) {
-            return redirect('/login');
-        }
-
-        // Check if the authenticated user's role matches the required role
-        if (Auth::user()->role != $role) {
-            return redirect('/guest/home');
+        if (Auth::check()) {
+            $role = Auth::user()->role;
+            if ($role == 1) {
+                return $next($request);
+            } else{
+                return redirect()->route('guest.home');
+            }            
         }
 
         return $next($request);
+       
     }
 }

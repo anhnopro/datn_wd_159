@@ -62,7 +62,43 @@
             <div class="section-title">
                 <h2>Phòng trọ <span>nổi bật</span></h2>
             </div>
-    
+            <form action="{{ route('guest.filter') }}" method="GET" class="mb-4">
+                <div class="row">
+                    <!-- Lọc theo danh mục -->
+                    <div class="col-md-3">
+                        <select name="category_id" class="form-select">
+                            <option value="">Tất cả danh mục</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}" 
+                                    {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+            
+                    <!-- Lọc theo giá -->
+                    <div class="col-md-3">
+                        <select name="price" class="form-select">
+                            <option value="">Tất cả mức giá</option>
+                            <option value="1" {{ request('price') == '1' ? 'selected' : '' }}>Dưới 1 triệu</option>
+                            <option value="2" {{ request('price') == '2' ? 'selected' : '' }}>1 - 3 triệu</option>
+                            <option value="3" {{ request('price') == '3' ? 'selected' : '' }}>Trên 3 triệu</option>
+                        </select>
+                    </div>
+            
+                    <!-- Lọc theo địa chỉ -->
+                    <div class="col-md-3">
+                        <input type="text" name="address" class="form-control" placeholder="Nhập địa chỉ"
+                            value="{{ request('address') }}">
+                    </div>
+            
+                    <!-- Nút Lọc -->
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-primary w-100">Lọc</button>
+                    </div>
+                </div>
+            </form>
             <div class="room-outer">
                 @if ($articles->count() > 0)
                     <div class="row">
