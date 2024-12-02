@@ -50,13 +50,21 @@
                             <!-- Giá -->
                             <div class="col-md-6">
                                 <label for="price" class="form-label">Giá <span style="color:red;"> *<span></label>
-                                <input type="text" id="price" name="price" class="form-control"
-                                    value="{{ old('price') }}">
+                                <input
+                                    type="text"
+                                    id="formatted-price"
+                                    class="form-control"
+                                    value="{{ old('price') }}"
+                                    oninput="formatPrice(this)"
+                                    onblur="syncHiddenInput()"
+                                >
+                                <input type="hidden" id="price" name="price" value="{{ old('price') }}">
                                 <p class="mt-2" id="price-error" style="color: red; display: none;"></p>
                                 @error('price')
-                                    <p class="mt-2" class="mt-2" style="color: red">{{ $message }}</p>
+                                    <p class="mt-2" style="color: red">{{ $message }}</p>
                                 @enderror
                             </div>
+
 
                             <!-- Địa chỉ -->
                             <div class="col-md-6">
@@ -118,6 +126,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    <script src="{{asset('room/formatPrice.js')}}"></script>
     <script>
         $(document).ready(function() {
             $('#service').change(function() {
@@ -153,5 +162,5 @@
     <script src="{{ asset('room/editor.js') }}"></script>
     <script src="{{ asset('room/images.js') }}"></script>
     <script src="{{ asset('room/validate-room.js') }}"></script>
-    <script src="{{asset('room/formatPrice.js')}}"></script>
+
 @endsection

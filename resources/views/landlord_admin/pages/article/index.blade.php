@@ -25,7 +25,7 @@
                 </div>
             @endif
         </div>
-
+         <div class="col-xl-12 col-sm-12 col-md-12 mb-2"><h3>Danh sách tin đăng</h3></div>
         <div class="col-xl-12 col-sm-12 col-md-12 mb-2 text-end">
             <a href="{{ route('landlord_admin.article.create') }}" class="btn btn-info">Thêm mới +</a>
         </div>
@@ -33,11 +33,11 @@
         <table class="table table-nowrap table-striped-columns mb-0">
             <thead class="table-light">
                 <tr>
+                    <th>Người đăng</th>
                     <th>Tiêu đề</th>
                     <th>Phòng</th>
                     <th>Loại tin</th>
                     <th>Danh mục</th>
-
                     <th>Trạng thái</th>
                     <th>Hành động</th>
                 </tr>
@@ -45,6 +45,7 @@
             <tbody>
                 @foreach ($articles as $article)
                 <tr>
+                    <td>{{$article->user->name}}</td>
                     <td>{{ $article->title }}</td>
                     <td>{{ $article->room->name }}</td>
                     <td>
@@ -93,7 +94,7 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Xóa</button>
                             </form>
-                       
+
                         @endif
                     </td>
                 </tr>

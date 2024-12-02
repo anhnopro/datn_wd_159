@@ -1,14 +1,16 @@
-const priceInput = document.getElementById('price');
+function formatPrice(input) {
+    // Loại bỏ các ký tự không phải số
+    let value = input.value.replace(/\D/g, '');
 
-    priceInput.addEventListener('input', function (e) {
-        let value = this.value.replace(/\D/g, ''); // Loại bỏ tất cả ký tự không phải số
-        if (value) {
-            value = parseInt(value).toLocaleString('vi-VN'); // Thêm dấu chấm phân cách theo định dạng Việt Nam
-        }
-        this.value = value;
-    });
+    // Định dạng số với dấu chấm phân cách
+    input.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
 
-    priceInput.addEventListener('blur', function () {
-        // Xóa khoảng trống khi mất focus
-        this.value = this.value.trim();
-    });
+// Đồng bộ giá trị không định dạng vào input ẩn
+function syncHiddenInput() {
+    const formattedInput = document.getElementById('formatted-price');
+    const hiddenInput = document.getElementById('price');
+
+    // Loại bỏ các dấu chấm từ giá trị định dạng
+    hiddenInput.value = formattedInput.value.replace(/\./g, '');
+}
